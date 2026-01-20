@@ -5,7 +5,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "dev:css": "npx @tailwindcss/cli -i ./public/tailwind.css -o ./public/styles.css --watch"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "@quixo3/prisma-session-store": "^3.1.19",
+    "@tailwindcss/cli": "^4.1.18",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "ejs": "^4.0.1",
@@ -29,14 +32,17 @@
     "express-session": "^1.18.2",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "pg": "^8.17.1"
+    "pg": "^8.17.1",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
     "globals": "^17.0.0",
-    "prisma": "^7.2.0",
+    "nodemon": "^3.1.11",
     "prettier": "^3.8.0",
-    "eslint-config-prettier": "^10.1.8"
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "prisma": "^7.2.0"
   }
 }

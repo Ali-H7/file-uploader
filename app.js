@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import path from 'node:path';
 import auth from './lib/auth.js';
+import controllers from './controllers/controllers.js';
 const __dirname = import.meta.dirname;
 
 const app = express();
@@ -15,11 +16,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Auth
 app.use(auth.appSession);
 app.use(auth.passport.session());
-app.use(auth.storeUserInLocalObject);
+app.use(auth.setCurrentUser);
 
-app.get('/login', (req, res) => {
-  res.render('login');
-});
+// routes
+app.get('/login', controllers.login);
 
 app.post('/login', auth.login);
 app.get('/logout', auth.logout);

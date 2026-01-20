@@ -4,5 +4,14 @@
   "singleQuote": true,
   "jsxSingleQuote": true,
   "printWidth": 120,
-  "tabWidth": 2
+  "tabWidth": 2,
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "overrides": [
+    {
+      "files": "*.ejs",
+      "options": {
+        "parser": "html"
+      }
+    }
+  ]
 }
