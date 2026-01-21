@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
-    "dev:css": "npx @tailwindcss/cli -i ./public/tailwind.css -o ./public/styles.css --watch"
+    "dev:css": "npx @tailwindcss/cli -i ./public/tailwind.css -o ./public/styles.css --watch",
+    "prisma:studio": "npx prisma studio --config ./prisma.config.js"
   },
   "repository": {
     "type": "git",

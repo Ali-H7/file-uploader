@@ -19,6 +19,10 @@ app.use(auth.passport.session());
 app.use(auth.setCurrentUser);
 
 // routes
+app.get('/', (req, res) => {
+  if (!req.user) return res.redirect('/login');
+  res.render('index');
+});
 app.get('/login', controllers.login);
 
 app.get('/register', controllers.registerGet);
