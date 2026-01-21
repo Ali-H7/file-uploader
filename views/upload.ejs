@@ -1,0 +1,50 @@
+<div class="flex justify-center pt-16">
+  <form class="flex flex-col items-center gap-8" method="post" action="/upload" enctype="multipart/form-data">
+    <label
+      class="w-md border-2 border-dashed border-slate-300 bg-slate-100 p-8 hover:cursor-pointer hover:bg-slate-200"
+      for="uploadedFile"
+    >
+      <div class="flex flex-col items-center justify-center">
+        <img src="/icons/upload.svg" alt="" />
+        <div class="preview">
+          <p>Click here to upload your files</p>
+        </div>
+      </div>
+    </label>
+    <input class="sr-only" type="file" id="uploadedFile" name="uploadedFile" multiple />
+    <button class="w-full rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600">
+      Upload
+    </button>
+  </form>
+</div>
+
+<script>
+  const fileInput = document.querySelector('#uploadedFile');
+
+  function updatePreview() {
+    const previewText = document.querySelector('.preview');
+    const currentFiles = fileInput.files;
+
+    while (previewText.firstChild) {
+      previewText.removeChild(previewText.firstChild);
+    }
+
+    if (currentFiles.length === 0) {
+      const text = document.createElement('p');
+      text.textContent = 'Click here to upload your files';
+      previewText.appendChild(text);
+    } else {
+      const list = document.createElement('ol');
+      previewText.appendChild(list);
+
+      for (const currentFile of currentFiles) {
+        const file = document.createElement('li');
+        file.classList.add('text-center');
+        file.textContent = `${currentFile.name}`;
+        list.appendChild(file);
+      }
+    }
+  }
+
+  fileInput.addEventListener('change', updatePreview);
+</script>
