@@ -1,5 +1,12 @@
 <header class="flex w-full justify-center text-2xl">
   <div class="w-3xl px-8 pt-8">
-    <h1 class="border-b pb-1 font-bold">File Uploader</h1>
+    <div class="flex justify-between border-b pb-1">
+      <h1 class="font-bold">File Uploader</h1>
+      <% if (currentUser) { %>
+      <a class="self-end text-base font-bold text-blue-500 hover:underline" href="/logout">
+        <p>Log Out</p>
+      </a>
+      <% } %>
+    </div>
   </div>
 </header>
