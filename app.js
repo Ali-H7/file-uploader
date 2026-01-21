@@ -28,6 +28,8 @@ app.get('/login', controllers.login);
 app.get('/register', controllers.registerGet);
 app.post('/register', controllers.registerPost);
 
+app.post('/upload', controllers.uploadPost);
+
 app.post('/login', auth.login);
 app.get('/logout', auth.logout);
 

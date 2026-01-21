@@ -1,6 +1,9 @@
 import validateUserInput from '../middleware/validation.js';
 import { validationResult, matchedData } from 'express-validator';
+import multer from 'multer';
+const upload = multer({ dest: 'uploads/' });
 import userModel from '../services/userModel.js';
+import fileModel from '../services/fileModel.js';
 
 const login = (req, res) => {
   if (req.user) return res.redirect('/');
@@ -28,4 +31,14 @@ const registerPost = [
   },
 ];
 
-export default { login, registerGet, registerPost };
+const uploadPost = [
+  upload.array('uploadedFiles'),
+  async (req, res) => {
+    const { id } = req.user;
+    const { files } = req;
+    await fileModel.addFiles(files, id);
+    res.redirect('/');
+  },
+];
+
+export default { login, registerGet, registerPost, uploadPost };
