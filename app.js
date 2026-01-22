@@ -26,6 +26,8 @@ app.get('/', (req, res) => {
 app.get('/login', controllers.login);
 
 app.get('/files', controllers.filesGet);
+app.get('/folders', controllers.foldersGet);
+app.post('/createFolder', controllers.createFolderPost);
 
 app.get('/register', controllers.registerGet);
 app.post('/register', controllers.registerPost);

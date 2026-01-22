@@ -14,12 +14,13 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  email     String @unique
-  firstName String @map("first_name") @db.VarChar(50)
-  lastName  String @map("last_name") @db.VarChar(50)
-  password  String @db.Char(60)
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  firstName String   @map("first_name") @db.VarChar(50)
+  lastName  String   @map("last_name") @db.VarChar(50)
+  password  String   @db.Char(60)
   files     File[]
+  folders   Folder[]
 }
 
 model File {
@@ -29,17 +30,19 @@ model File {
   fileSize   Int      @map("file_size")
   filePath   String   @map("file_path") @db.VarChar(255)
   uploadDate DateTime @default(now()) @map("upload_date")
-  user       User     @relation(fields: [userId], references: [id])
   userId     Int      @map("user_id")
+  user       User     @relation(fields: [userId], references: [id])
+  folders    Folder[]
 }
 
-// model Folder {
-//   id    Int     @id @default(autoincrement())
-//   folderName String  @db.VarChar(255) @map("folder_name")
-//   folderSize String  @db.VarChar(255) @map("folder_size")
-//   user    User    @relation(fields: [userId], references: [id])
-//   userId  Int  @map("user_id")
-// }
+model Folder {
+  id         Int      @id @default(autoincrement())
+  folderName String   @map("folder_name") @db.VarChar(255)
+  createDate DateTime @default(now()) @map("create_date")
+  userId     Int      @map("user_id")
+  user       User     @relation(fields: [userId], references: [id])
+  files      File[]
+}
 
 model Session {
   id        String   @id

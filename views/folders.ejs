@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>File Uploader - My Folders</title>
+  </head>
+  <body>
+    <%- include('header') %> <%- include('nav-bar', { selected: 3 }) %> <% if (folders.length === 0) { %> <%-
+    include('warning', { text: "You don't have any folders yet, Create to get started." }) %> <% } %> <%-
+    include('create-folder') %> <% if (folders.length > 0) { %> <%- include('my-folders', { folders: folders }) %> <% }
+    %>
+  </body>
+</html>

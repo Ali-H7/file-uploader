@@ -4,6 +4,7 @@ import multer from 'multer';
 const upload = multer({ dest: 'uploads/' });
 import userModel from '../services/userModel.js';
 import fileModel from '../services/fileModel.js';
+import folderModel from '../services/folderModel.js';
 import prettyBytes from 'pretty-bytes';
 
 const login = (req, res) => {
@@ -60,4 +61,18 @@ const filesGet = async (req, res) => {
   console.log(files);
 };
 
-export default { login, registerGet, registerPost, uploadPost, filesGet };
+const foldersGet = async (req, res) => {
+  const { id } = req.user;
+  const folders = await folderModel.findAllFolders(id);
+  console.log(folders);
+  res.render('folders', { folders });
+};
+
+const createFolderPost = async (req, res) => {
+  const userId = req.user.id;
+  const folderName = req.body.folderName;
+  await folderModel.createFolder(folderName, userId);
+  res.redirect('/folders');
+};
+
+export default { login, registerGet, registerPost, uploadPost, filesGet, createFolderPost, foldersGet };
