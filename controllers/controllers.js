@@ -4,6 +4,7 @@ import multer from 'multer';
 const upload = multer({ dest: 'uploads/' });
 import userModel from '../services/userModel.js';
 import fileModel from '../services/fileModel.js';
+import prettyBytes from 'pretty-bytes';
 
 const login = (req, res) => {
   if (req.user) return res.redirect('/');
@@ -41,4 +42,22 @@ const uploadPost = [
   },
 ];
 
-export default { login, registerGet, registerPost, uploadPost };
+const filesGet = async (req, res) => {
+  const { id } = req.user;
+  const userFiles = await fileModel.findAllFiles(id);
+  const files = userFiles.map((file) => {
+    return {
+      ...file,
+      fileSize: prettyBytes(file.fileSize),
+      uploadDate: file.uploadDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }),
+    };
+  });
+  res.render('files', { files });
+  console.log(files);
+};
+
+export default { login, registerGet, registerPost, uploadPost, filesGet };

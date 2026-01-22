@@ -15,4 +15,13 @@ async function addFiles(filesArray, userId) {
   });
 }
 
-export default { addFiles };
+async function findAllFiles(userId) {
+  const files = await prisma.file.findMany({
+    where: {
+      userId,
+    },
+  });
+  return files;
+}
+
+export default { addFiles, findAllFiles };

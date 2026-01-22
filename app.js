@@ -25,6 +25,8 @@ app.get('/', (req, res) => {
 });
 app.get('/login', controllers.login);
 
+app.get('/files', controllers.filesGet);
+
 app.get('/register', controllers.registerGet);
 app.post('/register', controllers.registerPost);
 
