@@ -1,6 +1,6 @@
-<div class="flex justify-center pt-16">
+<div class="flex justify-center pt-8">
   <div class="flex w-xl flex-col items-center">
-    <h2 class="mb-4 text-xl font-bold">My Files</h2>
+    <h2 class="mb-4 text-xl font-bold"><%=title%></h2>
     <% files.forEach ((file, i)=> { %>
     <div
       class="<%=i % 2 !== 0 ? 'bg-slate-100 p-2' : 'bg-slate-200 p-2'%> flex w-full justify-between gap-2 border-2 border-slate-200 shadow-md"
@@ -11,9 +11,10 @@
       </div>
       <p class="w-1/8"><%=file.fileSize%></p>
       <p class="w-2/8"><%=file.uploadDate%></p>
+      <% if (page === '/files') { %>
       <div class="flex w-1/8 justify-end">
         <img class="h-6 w-6" src="/icons/share.svg" alt="" />
-        <a href=<%=file.filePath%>>
+        <a href="<%=file.filePath%>">
           <svg
             class="fill-green-600 hover:cursor-pointer hover:fill-green-500"
             xmlns="http://www.w3.org/2000/svg"
@@ -28,6 +29,7 @@
           </svg>
         </a>
       </div>
+      <% } %>
     </div>
     <% }) %>
   </div>

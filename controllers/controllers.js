@@ -5,7 +5,7 @@ const upload = multer({ dest: 'uploads/' });
 import userModel from '../services/userModel.js';
 import fileModel from '../services/fileModel.js';
 import folderModel from '../services/folderModel.js';
-import prettyBytes from 'pretty-bytes';
+import formatFiles from '../helpers/formatFiles.js';
 
 const login = (req, res) => {
   if (req.user) return res.redirect('/');
@@ -39,32 +39,20 @@ const uploadPost = [
     const { id } = req.user;
     const { files } = req;
     await fileModel.addFiles(files, id);
-    res.redirect('/');
+    res.redirect('/files');
   },
 ];
 
 const filesGet = async (req, res) => {
   const { id } = req.user;
   const userFiles = await fileModel.findAllFiles(id);
-  const files = userFiles.map((file) => {
-    return {
-      ...file,
-      fileSize: prettyBytes(file.fileSize),
-      uploadDate: file.uploadDate.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
-    };
-  });
+  const files = formatFiles(userFiles);
   res.render('files', { files });
-  console.log(files);
 };
 
 const foldersGet = async (req, res) => {
   const { id } = req.user;
   const folders = await folderModel.findAllFolders(id);
-  console.log(folders);
   res.render('folders', { folders });
 };
 
@@ -75,4 +63,55 @@ const createFolderPost = async (req, res) => {
   res.redirect('/folders');
 };
 
-export default { login, registerGet, registerPost, uploadPost, filesGet, createFolderPost, foldersGet };
+const folderGet = async (req, res) => {
+  const userId = req.user.id;
+  const folderId = Number(req.params.id);
+  const userFiles = await fileModel.findAllFiles(userId);
+  const userFolder = await folderModel.findFolderContent(folderId);
+  const files = userFiles.map((file) => {
+    return { ...file, selected: userFolder.files.map((folderFile) => folderFile.id).includes(file.id) };
+  });
+  const folder = {
+    ...userFolder,
+    files: formatFiles(userFolder.files),
+  };
+  res.render('folder', { folder, files });
+};
+
+const modifyFolderPost = async (req, res) => {
+  const folderId = Number(req.params.id);
+  const { selectedFiles } = req.body;
+  const filesId =
+    selectedFiles === undefined
+      ? []
+      : !Array.isArray(selectedFiles)
+        ? [Number(selectedFiles)]
+        : selectedFiles.map((fileId) => Number(fileId));
+  const folder = await folderModel.findFolderContent(folderId);
+  const currentFiles = folder.files.map((file) => file.id);
+  const filesToAdd = filesId.filter((fileId) => !currentFiles.includes(fileId));
+  const filesToDelete = currentFiles.filter((fileId) => !filesId.includes(fileId));
+
+  if (filesToAdd.length > 0 || filesToDelete.length > 0) {
+    const addFiles = filesToAdd.map((file) => {
+      return { id: file };
+    });
+    const deleteFiles = filesToDelete.map((file) => {
+      return { id: file };
+    });
+    await folderModel.updateFolder(folderId, addFiles, deleteFiles);
+  }
+  res.redirect(`/folder/${folderId}`);
+};
+
+export default {
+  login,
+  registerGet,
+  registerPost,
+  uploadPost,
+  filesGet,
+  createFolderPost,
+  foldersGet,
+  folderGet,
+  modifyFolderPost,
+};

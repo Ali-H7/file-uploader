@@ -4,7 +4,11 @@ async function createFolder(folderName, userId) {
   await prisma.folder.create({
     data: {
       folderName,
-      userId,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
     },
   });
 }
@@ -18,4 +22,30 @@ async function findAllFolders(userId) {
   return folders;
 }
 
-export default { createFolder, findAllFolders };
+async function findFolderContent(folderId) {
+  const folder = await prisma.folder.findUnique({
+    where: {
+      id: folderId,
+    },
+    include: {
+      files: true,
+    },
+  });
+  return folder;
+}
+
+async function updateFolder(folderId, filesToAdd, filesToRemove) {
+  await prisma.folder.update({
+    where: {
+      id: folderId,
+    },
+    data: {
+      files: {
+        connect: filesToAdd,
+        disconnect: filesToRemove,
+      },
+    },
+  });
+}
+
+export default { createFolder, findAllFolders, findFolderContent, updateFolder };
