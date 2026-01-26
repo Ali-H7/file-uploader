@@ -110,8 +110,16 @@ const shareFile = async (req, res) => {
   const fileId = Number(req.params.id);
   const { duration } = req.body;
   const date = helpers.createDateObject(duration);
-  await fileSharesModel.createFileShare(userId, fileId, date);
-  res.redirect('/files');
+  const shareId = await fileSharesModel.createFileShare(userId, fileId, date);
+  res.redirect(`/shared-file/${shareId}`);
+};
+
+const sharedFile = async (req, res) => {
+  const shareId = Number(req.params.id);
+  const url = req.protocol + '://' + req.get('host') + req.originalUrl;
+  let share = await fileSharesModel.findFileShare(shareId);
+  share = helpers.formatFileShare(share, url);
+  res.render('shared-file', { share });
 };
 
 export default {
@@ -125,4 +133,5 @@ export default {
   folderGet,
   modifyFolderPost,
   shareFile,
+  sharedFile,
 };

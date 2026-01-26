@@ -20,13 +20,13 @@ app.use(auth.setCurrentUser);
 
 // routes
 app.get('/', (req, res) => {
-  if (!req.user) return res.redirect('/login');
   res.render('index');
 });
 app.get('/login', controllers.login);
 
 app.get('/files', controllers.filesGet);
 app.post('/share-file/:id', controllers.shareFile);
+app.get('/shared-file/:id', controllers.sharedFile);
 
 app.get('/folders', controllers.foldersGet);
 app.get('/folder/:id', controllers.folderGet);

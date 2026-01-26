@@ -1,15 +1,12 @@
 import prettyBytes from 'pretty-bytes';
+import formateDate from './formatDate.js';
 
 export default function formatFiles(files) {
   return files.map((file) => {
     return {
       ...file,
       fileSize: prettyBytes(file.fileSize),
-      uploadDate: file.uploadDate.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
+      uploadDate: formateDate(file.uploadDate),
     };
   });
 }

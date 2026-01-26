@@ -1,7 +1,7 @@
 import { prisma } from '../lib/prisma.js';
 
 async function createFileShare(userId, fileId, date) {
-  await prisma.fileShares.create({
+  const share = await prisma.fileShares.create({
     data: {
       validUntil: date,
       user: {
@@ -16,5 +16,20 @@ async function createFileShare(userId, fileId, date) {
       },
     },
   });
+  return share.id;
 }
-export default { createFileShare };
+
+async function findFileShare(shareId) {
+  const share = await prisma.fileShares.findUnique({
+    where: {
+      id: shareId,
+    },
+    select: {
+      validUntil: true,
+      file: { select: { fileName: true, fileSize: true, uploadDate: true, filePath: true } },
+      user: { select: { firstName: true, lastName: true } },
+    },
+  });
+  return share;
+}
+export default { createFileShare, findFileShare };

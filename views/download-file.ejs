@@ -1,0 +1,14 @@
+<div class="flex justify-center pt-8">
+  <div class="flex flex-col gap-4 rounded-md border-2 border-slate-200 bg-slate-100 p-8 shadow-md">
+    <h1 class="text-center">
+      Download file <span class="font-bold"><%=share.file.fileName%></span> [<%=share.file.fileSize%>]
+    </h1>
+    <p class="text-center">
+      This file was shared by <span class="font-bold"><%=share.user.fullName%></span>, and will
+      <span class="font-bold">expire</span> on <%=share.validUntil%>
+    </p>
+    <button class="w-full rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600">
+      Download
+    </button>
+  </div>
+</div>
