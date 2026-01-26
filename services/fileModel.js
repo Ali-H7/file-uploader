@@ -20,6 +20,9 @@ async function findAllFiles(userId) {
     where: {
       userId,
     },
+    orderBy: {
+      id: 'desc',
+    },
   });
   return files;
 }
