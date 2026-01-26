@@ -1,4 +1,4 @@
-export default function validateUserInput(req, res, next) {
+export default function validateUserLogin(req, res, next) {
   if (req.user) next();
   else res.redirect('/login');
 }
