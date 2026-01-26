@@ -26,6 +26,8 @@ app.get('/', (req, res) => {
 app.get('/login', controllers.login);
 
 app.get('/files', controllers.filesGet);
+app.post('/share-file/:id', controllers.shareFile);
+
 app.get('/folders', controllers.foldersGet);
 app.get('/folder/:id', controllers.folderGet);
 app.post('/create-folder', controllers.createFolderPost);
@@ -35,6 +37,8 @@ app.get('/register', controllers.registerGet);
 app.post('/register', controllers.registerPost);
 
 app.post('/upload', controllers.uploadPost);
+
+// app.get('/my-shares')
 
 app.post('/login', auth.login);
 app.get('/logout', auth.logout);

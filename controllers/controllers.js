@@ -5,7 +5,8 @@ const upload = multer({ dest: 'uploads/' });
 import userModel from '../services/userModel.js';
 import fileModel from '../services/fileModel.js';
 import folderModel from '../services/folderModel.js';
-import formatFiles from '../helpers/formatFiles.js';
+import helpers from '../helpers/helpers.js';
+import fileSharesModel from '../services/fileSharesModel.js';
 
 const login = (req, res) => {
   if (req.user) return res.redirect('/');
@@ -46,7 +47,7 @@ const uploadPost = [
 const filesGet = async (req, res) => {
   const { id } = req.user;
   const userFiles = await fileModel.findAllFiles(id);
-  const files = formatFiles(userFiles);
+  const files = helpers.formatFiles(userFiles);
   res.render('files', { files });
 };
 
@@ -73,7 +74,7 @@ const folderGet = async (req, res) => {
   });
   const folder = {
     ...userFolder,
-    files: formatFiles(userFolder.files),
+    files: helpers.formatFiles(userFolder.files),
   };
   res.render('folder', { folder, files });
 };
@@ -104,6 +105,15 @@ const modifyFolderPost = async (req, res) => {
   res.redirect(`/folder/${folderId}`);
 };
 
+const shareFile = async (req, res) => {
+  const userId = req.user.id;
+  const fileId = Number(req.params.id);
+  const { duration } = req.body;
+  const date = helpers.createDateObject(duration);
+  await fileSharesModel.createFileShare(userId, fileId, date);
+  res.redirect('/files');
+};
+
 export default {
   login,
   registerGet,
@@ -114,4 +124,5 @@ export default {
   foldersGet,
   folderGet,
   modifyFolderPost,
+  shareFile,
 };
