@@ -14,25 +14,42 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  firstName String   @map("first_name") @db.VarChar(50)
-  lastName  String   @map("last_name") @db.VarChar(50)
-  password  String   @db.Char(60)
-  files     File[]
-  folders   Folder[]
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  firstName  String       @map("first_name") @db.VarChar(50)
+  lastName   String       @map("last_name") @db.VarChar(50)
+  password   String       @db.Char(60)
+  files      File[]
+  fileShares FileShares[]
+  folders    Folder[]
+
+  @@map("user")
 }
 
 model File {
+  id         Int          @id @default(autoincrement())
+  fileName   String       @map("file_name") @db.VarChar(255)
+  fileType   String       @map("file_type") @db.VarChar(50)
+  fileSize   Int          @map("file_size")
+  filePath   String       @map("file_path") @db.VarChar(255)
+  uploadDate DateTime     @default(now()) @map("upload_date")
+  userId     Int          @map("user_id")
+  user       User         @relation(fields: [userId], references: [id])
+  fileShares FileShares[]
+  folders    Folder[]
+
+  @@map("file")
+}
+
+model FileShares {
   id         Int      @id @default(autoincrement())
-  fileName   String   @map("file_name") @db.VarChar(255)
-  fileType   String   @map("file_type") @db.VarChar(50)
-  fileSize   Int      @map("file_size")
-  filePath   String   @map("file_path") @db.VarChar(255)
-  uploadDate DateTime @default(now()) @map("upload_date")
   userId     Int      @map("user_id")
   user       User     @relation(fields: [userId], references: [id])
-  folders    Folder[]
+  fileId     Int      @map("file_id")
+  file       File     @relation(fields: [fileId], references: [id])
+  validUntil DateTime @map("valid_until")
+
+  @@map("file_shares")
 }
 
 model Folder {
@@ -42,6 +59,8 @@ model Folder {
   userId     Int      @map("user_id")
   user       User     @relation(fields: [userId], references: [id])
   files      File[]
+
+  @@map("folder")
 }
 
 model Session {
@@ -49,4 +68,6 @@ model Session {
   sid       String   @unique
   data      String
   expiresAt DateTime
+
+  @@map("session")
 }
