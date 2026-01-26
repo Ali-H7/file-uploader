@@ -1,19 +1,21 @@
-<div class="flex flex-col items-center gap-4 pt-8">
+<div class="flex w-full flex-col items-center gap-4 p-8">
   <h1 class="text-xl font-bold">Upload Files</h1>
-  <form class="flex flex-col items-center gap-8" method="post" action="/upload" enctype="multipart/form-data">
+  <form class="flex w-full flex-col items-center gap-8" method="post" action="/upload" enctype="multipart/form-data">
     <label
-      class="w-md border-2 border-dashed border-slate-300 bg-slate-100 p-8 hover:cursor-pointer hover:bg-slate-200"
+      class="w-full max-w-md border-2 border-dashed border-slate-300 bg-slate-100 p-8 hover:cursor-pointer hover:bg-slate-200"
       for="uploadedFiles"
     >
       <div class="flex flex-col items-center justify-center">
         <img src="/icons/upload.svg" alt="" />
         <div class="preview">
-          <p>Click here to upload your files</p>
+          <p class="pt-2 text-center">Click here to upload your files</p>
         </div>
       </div>
     </label>
     <input class="sr-only" type="file" id="uploadedFiles" name="uploadedFiles" multiple />
-    <button class="w-full rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600">
+    <button
+      class="w-full max-w-md rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600"
+    >
       Upload
     </button>
   </form>
