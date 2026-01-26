@@ -2,6 +2,7 @@ import formateDate from './formatDate.js';
 import prettyBytes from 'pretty-bytes';
 
 export default function formatFileShare(shareObject, url) {
+  const currentDate = new Date();
   return {
     ...shareObject,
     validUntil: formateDate(shareObject.validUntil),
@@ -11,7 +12,7 @@ export default function formatFileShare(shareObject, url) {
       uploadDate: formateDate(shareObject.file.uploadDate),
     },
     user: { ...shareObject.user, fullName: `${shareObject.user.firstName} ${shareObject.user.lastName}` },
-    status: shareObject.validUntil > shareObject.file.uploadDate,
+    status: shareObject.validUntil > currentDate,
     url,
   };
 }

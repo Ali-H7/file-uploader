@@ -87,7 +87,7 @@
     <% }) %>
   </div>
 </div>
-
+<% if (page === '/files') {%>
 <script>
   const dialogs = document.querySelectorAll('.share-dialog');
   const dialogButton = document.querySelectorAll('.share-dialog-button');
@@ -97,3 +97,4 @@
     dialogCloseButton[i].addEventListener('click', () => dialog.close());
   });
 </script>
+<% } %>

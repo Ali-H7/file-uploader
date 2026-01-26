@@ -38,7 +38,7 @@ app.post('/register', controllers.registerPost);
 
 app.post('/upload', controllers.uploadPost);
 
-// app.get('/my-shares')
+app.get('/my-shares', controllers.myShares);
 
 app.post('/login', auth.login);
 app.get('/logout', auth.logout);

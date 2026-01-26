@@ -122,6 +122,13 @@ const sharedFile = async (req, res) => {
   res.render('shared-file', { share });
 };
 
+const myShares = async (req, res) => {
+  const userId = req.user.id;
+  let shares = await fileSharesModel.findUserShares(userId);
+  shares = helpers.formatMyShares(shares);
+  res.render('my-shares', { shares });
+};
+
 export default {
   login,
   registerGet,
@@ -134,4 +141,5 @@ export default {
   modifyFolderPost,
   shareFile,
   sharedFile,
+  myShares,
 };

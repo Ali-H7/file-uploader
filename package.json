@@ -27,6 +27,7 @@
     "@quixo3/prisma-session-store": "^3.1.19",
     "@tailwindcss/cli": "^4.1.18",
     "bcryptjs": "^3.0.3",
+    "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
     "ejs": "^4.0.1",
     "express": "^5.2.1",

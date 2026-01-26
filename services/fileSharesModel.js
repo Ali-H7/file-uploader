@@ -19,6 +19,22 @@ async function createFileShare(userId, fileId, date) {
   return share.id;
 }
 
+async function findUserShares(userId) {
+  const shares = await prisma.fileShares.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      id: true,
+      validUntil: true,
+      file: {
+        select: { fileName: true, fileSize: true },
+      },
+    },
+  });
+  return shares;
+}
+
 async function findFileShare(shareId) {
   const share = await prisma.fileShares.findUnique({
     where: {
@@ -32,4 +48,4 @@ async function findFileShare(shareId) {
   });
   return share;
 }
-export default { createFileShare, findFileShare };
+export default { createFileShare, findUserShares, findFileShare };
