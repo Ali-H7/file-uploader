@@ -1,6 +1,6 @@
 <div class="flex justify-center pt-8">
   <div class="flex w-xl flex-col items-center">
-    <h2 class="mb-4 text-xl font-bold"><%=title%></h2>
+    <h2 class="mb-4 text-xl font-bold">My Files</h2>
     <% files.forEach ((file, i)=> { %>
     <div
       class="<%=i % 2 !== 0 ? 'bg-slate-100 p-2' : 'bg-slate-200 p-2'%> flex w-full justify-between gap-2 border-2 border-slate-200 shadow-md"
@@ -11,7 +11,6 @@
       </div>
       <p class="w-1/8"><%=file.fileSize%></p>
       <p class="w-2/8"><%=file.uploadDate%></p>
-      <% if (page === '/files') { %>
       <div class="flex w-1/8 justify-end gap-2">
         <button class="share-dialog-button">
           <svg
@@ -42,7 +41,6 @@
           </svg>
         </a>
       </div>
-      <% } %>
     </div>
     <dialog
       class="share-dialog fixed top-1/3 left-1/2 w-xl -translate-x-1/2 -translate-y-1/2 transform rounded-lg backdrop:bg-black/50"
@@ -87,7 +85,7 @@
     <% }) %>
   </div>
 </div>
-<% if (page === '/files') {%>
+
 <script>
   const dialogs = document.querySelectorAll('.share-dialog');
   const dialogButton = document.querySelectorAll('.share-dialog-button');
@@ -97,4 +95,3 @@
     dialogCloseButton[i].addEventListener('click', () => dialog.close());
   });
 </script>
-<% } %>
