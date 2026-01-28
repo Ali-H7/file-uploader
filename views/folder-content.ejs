@@ -1,0 +1,81 @@
+<div class="flex justify-center">
+  <div class="w-full max-w-2xl p-8">
+    <h1 class="flex items-center justify-center gap-2 text-center text-xl font-bold">
+      <%= folder.folderName%>
+      <button class="share-dialog-button">
+        <svg
+          class="hover:cursor-pointer hover:fill-blue-500"
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#000000"
+        >
+          <path
+            d="M680-80q-50 0-85-35t-35-85q0-6 3-28L282-392q-16 15-37 23.5t-45 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q24 0 45 8.5t37 23.5l281-164q-2-7-2.5-13.5T560-760q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-24 0-45-8.5T598-672L317-508q2 7 2.5 13.5t.5 14.5q0 8-.5 14.5T317-452l281 164q16-15 37-23.5t45-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T720-200q0-17-11.5-28.5T680-240q-17 0-28.5 11.5T640-200q0 17 11.5 28.5T680-160ZM200-440q17 0 28.5-11.5T240-480q0-17-11.5-28.5T200-520q-17 0-28.5 11.5T160-480q0 17 11.5 28.5T200-440Zm480-280q17 0 28.5-11.5T720-760q0-17-11.5-28.5T680-800q-17 0-28.5 11.5T640-760q0 17 11.5 28.5T680-720Zm0 520ZM200-480Zm480-280Z"
+          />
+        </svg>
+      </button>
+    </h1>
+    <div class="pt-4">
+      <% folder.files.forEach((file, i) => { %>
+      <div
+        class="<%= i % 2 !== 0 ? 'bg-slate-100' : 'bg-slate-200' %> flex w-full justify-between gap-4 border-2 border-slate-200 p-2 shadow-md"
+      >
+        <p class="flex-1 truncate"><%= file.fileName %></p>
+        <p class="w-1/4"><%= file.fileSize %></p>
+        <p class="w-1/4"><%= file.uploadDate %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
+<dialog
+  class="share-dialog fixed top-1/3 left-1/2 w-xl -translate-x-1/2 -translate-y-1/2 transform rounded-lg backdrop:bg-black/50"
+>
+  <div class="flex flex-col border-2 border-slate-200 bg-slate-200 py-8 shadow-md">
+    <div class="relative flex items-center justify-center">
+      <h1 class="font-bold">Share Folder</h1>
+      <button class="share-dialog-close-button absolute right-4 hover:cursor-pointer" type="button">
+        <img src="/icons/x.svg" alt="Close" class="h-6 w-6" />
+      </button>
+    </div>
+    <div class="-mb-4 flex flex-col items-center gap-4 p-4">
+      <p class="text-center">You're about to share <span class="font-bold"><%=folder.folderName%></span></p>
+      <form action="/share-folder/<%=folder.id%>" method="post">
+        <fieldset>
+          <div class="flex gap-4">
+            <legend>Select share duration:</legend>
+            <div class="-ml-2">
+              <input type="radio" id="day" name="duration" value="day" checked />
+              <label for="day">1 Day</label>
+            </div>
+            <div>
+              <input type="radio" id="week" name="duration" value="week" />
+              <label for="week">1 Week</label>
+            </div>
+            <div>
+              <input type="radio" id="month" name="duration" value="month" />
+              <label for="month">1 Month</label>
+            </div>
+          </div>
+        </fieldset>
+        <button
+          class="mt-4 w-full rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600"
+          type="submit"
+        >
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const shareFolderDialog = document.querySelector('.share-dialog');
+  const shareFolderDialogButton = document.querySelector('.share-dialog-button');
+  const shareFolderDialogCloseButton = document.querySelector('.share-dialog-close-button');
+  shareFolderDialogButton.addEventListener('click', () => shareFolderDialog.showModal());
+  shareFolderDialogCloseButton.addEventListener('click', () => shareFolderDialog.close());
+</script>

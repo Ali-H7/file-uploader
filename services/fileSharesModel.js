@@ -28,7 +28,7 @@ async function findUserShares(userId) {
       id: true,
       validUntil: true,
       file: {
-        select: { fileName: true, fileSize: true },
+        select: { fileName: true },
       },
     },
   });

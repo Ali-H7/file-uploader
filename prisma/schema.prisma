@@ -14,14 +14,15 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique
-  firstName  String       @map("first_name") @db.VarChar(50)
-  lastName   String       @map("last_name") @db.VarChar(50)
-  password   String       @db.Char(60)
-  files      File[]
-  fileShares FileShares[]
-  folders    Folder[]
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  firstName    String         @map("first_name") @db.VarChar(50)
+  lastName     String         @map("last_name") @db.VarChar(50)
+  password     String         @db.Char(60)
+  files        File[]
+  fileShares   FileShares[]
+  folders      Folder[]
+  folderShares FolderShares[]
 
   @@map("user")
 }
@@ -48,19 +49,33 @@ model FileShares {
   fileId     Int      @map("file_id")
   file       File     @relation(fields: [fileId], references: [id])
   validUntil DateTime @map("valid_until")
+  shareDate  DateTime @default(now()) @map("share_date")
 
   @@map("file_shares")
 }
 
 model Folder {
-  id         Int      @id @default(autoincrement())
-  folderName String   @map("folder_name") @db.VarChar(255)
-  createDate DateTime @default(now()) @map("create_date")
-  userId     Int      @map("user_id")
-  user       User     @relation(fields: [userId], references: [id])
-  files      File[]
+  id           Int            @id @default(autoincrement())
+  folderName   String         @map("folder_name") @db.VarChar(255)
+  createDate   DateTime       @default(now()) @map("create_date")
+  userId       Int            @map("user_id")
+  user         User           @relation(fields: [userId], references: [id])
+  folderShares FolderShares[]
+  files        File[]
 
   @@map("folder")
+}
+
+model FolderShares {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map("user_id")
+  user       User     @relation(fields: [userId], references: [id])
+  folderId   Int      @map("folder_id")
+  folder     Folder   @relation(fields: [folderId], references: [id])
+  validUntil DateTime @map("valid_until")
+  shareDate  DateTime @default(now()) @map("share_date")
+
+  @@map("folder_shares")
 }
 
 model Session {

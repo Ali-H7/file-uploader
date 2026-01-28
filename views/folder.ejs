@@ -41,10 +41,10 @@
               </button>
             </div>
             <select class="multiple-select w-full" name="selectedFiles" multiple>
-                <% files.forEach((file)=> { %>
-                <option value="<%=file.id%>" <%=file.selected ? 'selected' : ''%>><%=file.fileName%></option>
-                <% }) %>
-              </select>
+              <% files.forEach((file)=> { %>
+              <option value="<%=file.id%>" <%=file.selected ? 'selected' : ''%>><%=file.fileName%></option>
+              <% }) %>
+            </select>
             <p><span class="font-bold">Warning:</span> This will update the folder to match your current selection.</p>
             <button
               class="rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600"
@@ -58,8 +58,8 @@
 
       <% } %>
     </div>
-    <% if (folder.files.length > 0) { %> <%- include('my-files', {title: folder.folderName ,files:folder.files, page:
-    '/folder'}) %> <% } %>
+    <% if (folder.files.length > 0) { %> <%- include('folder-content', {folder}) %> <% } else { %> <%- include('warning',
+    { text: "This folder is empty. Please add files using the modify button" }) %> <% } %>
     <script>
       const dialog = document.querySelector('#dialog');
       const dialogButton = document.querySelector('#dialog-button');

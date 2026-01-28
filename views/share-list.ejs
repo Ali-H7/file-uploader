@@ -5,13 +5,25 @@
     <div class="pt-4">
       <% shares.forEach((share, i)=> { %>
       <div
-        class="<%=i % 2 !== 0 ? 'bg-slate-100' : 'bg-slate-200'%> flex w-full justify-between gap-4 border-2 border-slate-200 p-2 shadow-md"
+        class="<%=i % 2 !== 0 ? 'bg-slate-100' : 'bg-slate-200'%> flex w-full gap-16 border-2 border-slate-200 p-2 shadow-md"
       >
-        <a class="w-2/4 font-bold text-blue-500 hover:underline" href="/shared-file/<%=share.id%>">
-          <p class="truncate"><%=share.file.fileName%></p>
-        </a>
-        <p class="w-1/4"><%=share.file.fileSize%></p>
-        <p class="w-1/4"><%=share.status ? `Expires ${share.status}`: 'Expired' %></p>
+        <% if (share.folder) { %>
+        <div class="flex flex-1 items-center gap-1">
+          <img src="/icons/folder.svg" alt="" />
+          <a class="font-bold text-blue-500 hover:underline" href="/shared-folder/<%=share.id%>">
+            <p class="truncate"><%=share.folder.folderName%></p>
+          </a>
+        </div>
+        <% } else { %>
+        <div class="flex flex-1 items-center gap-1">
+          <img src="/icons/file.svg" alt="" />
+          <a class="font-bold text-blue-500 hover:underline" href="/shared-file/<%=share.id%>">
+            <p class="truncate"><%=share.file.fileName%></p>
+          </a>
+        </div>
+
+        <% } %>
+        <p class="w-full max-w-35"><%=share.status ? `Expires ${share.status}`: 'Expired' %></p>
       </div>
       <% }) %>
     </div>

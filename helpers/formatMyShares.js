@@ -1,13 +1,15 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
-import prettyBytes from 'pretty-bytes';
 dayjs.extend(relativeTime);
 
-export default function formatMyShares(shares) {
+export default function formatMyShares(fileShares, folderShares) {
   const currentDate = new Date();
+  const shares = [...fileShares, ...folderShares];
   const formattedShares = shares.map((share) => {
     const status = share.validUntil > currentDate ? dayjs().to(dayjs(share.validUntil)) : false;
-    return { ...share, file: { ...share.file, fileSize: prettyBytes(share.file.fileSize) }, status };
+    if (share.folder) return { ...share, type: 'folder', status };
+    else return { ...share, type: 'file', status };
   });
+
   return formattedShares;
 }

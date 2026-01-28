@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "file_shares" ADD COLUMN     "share_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "folder_shares" ADD COLUMN     "share_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

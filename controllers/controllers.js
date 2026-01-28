@@ -5,8 +5,9 @@ const upload = multer({ dest: 'uploads/' });
 import userModel from '../services/userModel.js';
 import fileModel from '../services/fileModel.js';
 import folderModel from '../services/folderModel.js';
-import helpers from '../helpers/helpers.js';
 import fileSharesModel from '../services/fileSharesModel.js';
+import folderSharesModel from '../services/folderSharesModel.js';
+import helpers from '../helpers/helpers.js';
 
 const login = (req, res) => {
   if (req.user) return res.redirect('/');
@@ -124,9 +125,20 @@ const sharedFile = async (req, res) => {
 
 const myShares = async (req, res) => {
   const userId = req.user.id;
-  let shares = await fileSharesModel.findUserShares(userId);
-  shares = helpers.formatMyShares(shares);
+  const fileShares = await fileSharesModel.findUserShares(userId);
+  const folderShares = await folderSharesModel.findUserShares(userId);
+  const shares = helpers.formatMyShares(fileShares, folderShares);
   res.render('my-shares', { shares });
+};
+
+const shareFolder = async (req, res) => {
+  const userId = req.user.id;
+  const folderId = Number(req.params.id);
+  const { duration } = req.body;
+  const date = helpers.createDateObject(duration);
+  const shareId = await folderSharesModel.createFolderShare(userId, folderId, date);
+  res.redirect(`/`);
+  // res.redirect(`/shared-folder/${shareId}`);
 };
 
 export default {
@@ -142,4 +154,5 @@ export default {
   shareFile,
   sharedFile,
   myShares,
+  shareFolder,
 };
