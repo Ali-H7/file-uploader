@@ -234,8 +234,20 @@
   .top-1 {
     top: calc(var(--spacing) * 1);
   }
+  .top-1\/2 {
+    top: calc(1/2 * 100%);
+  }
   .top-1\/3 {
     top: calc(1/3 * 100%);
+  }
+  .top-2 {
+    top: calc(var(--spacing) * 2);
+  }
+  .top-2\/3 {
+    top: calc(2/3 * 100%);
+  }
+  .right-0 {
+    right: calc(var(--spacing) * 0);
   }
   .right-4 {
     right: calc(var(--spacing) * 4);
@@ -246,8 +258,17 @@
   .left-1\/2 {
     left: calc(1/2 * 100%);
   }
+  .m-0 {
+    margin: calc(var(--spacing) * 0);
+  }
+  .m-8 {
+    margin: calc(var(--spacing) * 8);
+  }
   .mx-auto {
     margin-inline: auto;
+  }
+  .mt-1 {
+    margin-top: calc(var(--spacing) * 1);
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
@@ -362,6 +383,9 @@
   }
   .w-\[120px\] {
     width: 120px;
+  }
+  .w-\[calc\(100\%-2rem\)\] {
+    width: calc(100% - 2rem);
   }
   .w-fit {
     width: fit-content;
@@ -509,6 +533,9 @@
   .overflow-hidden {
     overflow: hidden;
   }
+  .overflow-visible {
+    overflow: visible;
+  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
@@ -587,8 +614,14 @@
   .bg-slate-200 {
     background-color: var(--color-slate-200);
   }
+  .bg-transparent {
+    background-color: transparent;
+  }
   .bg-white {
     background-color: var(--color-white);
+  }
+  .bg-none {
+    background-image: none;
   }
   .p-0 {
     padding: calc(var(--spacing) * 0);
@@ -667,6 +700,9 @@
   }
   .pl-8 {
     padding-left: calc(var(--spacing) * 8);
+  }
+  .pl-16 {
+    padding-left: calc(var(--spacing) * 16);
   }
   .text-center {
     text-align: center;
@@ -953,9 +989,34 @@
       outline-style: none;
     }
   }
+  .sm\:flex {
+    @media (width >= 40rem) {
+      display: flex;
+    }
+  }
+  .sm\:hidden {
+    @media (width >= 40rem) {
+      display: none;
+    }
+  }
+  .sm\:flex-1 {
+    @media (width >= 40rem) {
+      flex: 1;
+    }
+  }
   .sm\:flex-row {
     @media (width >= 40rem) {
       flex-direction: row;
+    }
+  }
+  .sm\:gap-8 {
+    @media (width >= 40rem) {
+      gap: calc(var(--spacing) * 8);
+    }
+  }
+  .sm\:pl-0 {
+    @media (width >= 40rem) {
+      padding-left: calc(var(--spacing) * 0);
     }
   }
   .md\:ml-\[100\%\] {

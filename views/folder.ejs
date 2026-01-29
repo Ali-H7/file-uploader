@@ -20,32 +20,36 @@
     include('warning', { text: "No files available. Upload to manage and sort them into folders." }) %> <% } %>
     <div class="flex w-full justify-center pt-8">
       <% if (files.length > 0) { %>
-      <form action="/modify-folder/<%=folder.id%>" method="post">
-        <button
-          class="rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600"
-          id="dialog-button"
-          type="button"
-        >
-          Modify Folder
-        </button>
-        <!--  -->
-        <dialog
-          class="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-lg backdrop:bg-black/50"
-          id="dialog"
-        >
-          <div class="flex flex-col gap-4 border-2 border-slate-200 bg-slate-200 p-8 shadow-md">
+      <button
+        class="rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600"
+        id="dialog-button"
+        type="button"
+      >
+        Modify Folder
+      </button>
+      <dialog
+        class="fixed overflow-visible top-1/3 left-1/2 w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 -translate-y-1/2 transform rounded-lg border-none bg-transparent p-0 backdrop:bg-black/50"
+        id="dialog"
+      >
+        <form action="/modify-folder/<%=folder.id%>" method="post" class="m-0">
+          <div class="flex flex-col gap-4 rounded-lg border-2 border-slate-200 bg-slate-200 p-8 shadow-md">
             <div class="relative flex items-center justify-center">
-              <h1 class="font-bold">Modify Folder</h1>
-              <button class="absolute right-4 hover:cursor-pointer" type="button" id="dialog-close-button">
+              <h1 class="font-bold ">Modify Folder</h1>
+              <button class="absolute right-0 hover:cursor-pointer" type="button" id="dialog-close-button">
                 <img src="/icons/x.svg" alt="Close" class="h-6 w-6" />
               </button>
             </div>
+
             <select class="multiple-select w-full" name="selectedFiles" multiple>
               <% files.forEach((file)=> { %>
               <option value="<%=file.id%>" <%=file.selected ? 'selected' : ''%>><%=file.fileName%></option>
               <% }) %>
             </select>
-            <p><span class="font-bold">Warning:</span> This will update the folder to match your current selection.</p>
+
+            <p>
+              <span class="font-bold">Warning:</span> This will update the folder to match your current selection.
+            </p>
+
             <button
               class="rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600"
               type="submit"
@@ -53,13 +57,12 @@
               Confirm
             </button>
           </div>
-        </dialog>
-      </form>
-
+        </form>
+      </dialog>
       <% } %>
     </div>
-    <% if (folder.files.length > 0) { %> <%- include('folder-content', {folder}) %> <% } else { %> <%- include('warning',
-    { text: "This folder is empty. Please add files using the modify button" }) %> <% } %>
+    <% if (folder.files.length > 0) { %> <%- include('folder-content', {folder}) %> <% } else { %> <%-
+    include('warning', { text: "This folder is empty. Please add files using the modify button" }) %> <% } %>
     <script>
       const dialog = document.querySelector('#dialog');
       const dialogButton = document.querySelector('#dialog-button');

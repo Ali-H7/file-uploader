@@ -19,12 +19,16 @@
     </h1>
     <div class="pt-4">
       <% folder.files.forEach((file, i) => { %>
-      <div
-        class="<%= i % 2 !== 0 ? 'bg-slate-100' : 'bg-slate-200' %> flex w-full justify-between gap-4 border-2 border-slate-200 p-2 shadow-md"
-      >
-        <p class="flex-1 truncate"><%= file.fileName %></p>
-        <p class="w-1/4"><%= file.fileSize %></p>
-        <p class="w-1/4"><%= file.uploadDate %></p>
+      <div class="<%= i % 2 !== 0 ? 'bg-slate-100' : 'bg-slate-200' %> border-2 border-slate-200 p-2 shadow-md sm:flex">
+        <div class="flex gap-2 sm:flex-1">
+          <img class="h-6 w-6" src="/icons/file.svg" alt="" />
+          <p class="truncate"><%= file.fileName %></p>
+        </div>
+        <div class="flex gap-2 pl-8 sm:gap-8 sm:pl-0">
+          <p><%= file.fileSize %></p>
+          <div class="sm:hidden">-</div>
+          <p><%= file.uploadDate %></p>
+        </div>
       </div>
       <% }) %>
     </div>

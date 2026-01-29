@@ -137,8 +137,7 @@ const shareFolder = async (req, res) => {
   const { duration } = req.body;
   const date = helpers.createDateObject(duration);
   const shareId = await folderSharesModel.createFolderShare(userId, folderId, date);
-  res.redirect(`/`);
-  // res.redirect(`/shared-folder/${shareId}`);
+  res.redirect(`/shared-folder/${shareId}`);
 };
 
 const sharedFolder = async (req, res) => {
