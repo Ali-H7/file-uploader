@@ -1,17 +1,22 @@
-<div class="flex justify-center pt-8">
-  <div class="flex w-xl flex-col items-center">
+<div class="flex justify-center p-8">
+  <div class="flex w-full max-w-xl flex-col items-center">
     <h2 class="mb-4 text-xl font-bold">My Files</h2>
     <% files.forEach ((file, i)=> { %>
     <div
-      class="<%=i % 2 !== 0 ? 'bg-slate-100 p-2' : 'bg-slate-200 p-2'%> flex w-full justify-between gap-2 border-2 border-slate-200 shadow-md"
+      class="<%=i % 2 !== 0 ? 'bg-slate-100' : 'bg-slate-200'%> flex w-full justify-between gap-2 border-2 border-slate-200 p-2 shadow-md"
     >
-      <div class="flex w-3/8 gap-1">
-        <img class="h-6 w-6" src="/icons/file.svg" alt="" />
-        <p class="truncate"><%=file.fileName%></p>
+      <div class="flex w-full flex-col md:flex-row">
+        <div class="flex flex-1 items-center gap-1">
+          <img class="h-6 w-6" src="/icons/file.svg" alt="" />
+          <p class="truncate text-[clamp(0.75rem,3.7vw,1rem)]"><%=file.fileName%></p>
+        </div>
+        <div class="flex gap-2 md:justify-end md:px-2">
+          <p class="pl-8 text-[clamp(0.75rem,3.7vw,1rem)] md:text-right"><%=file.fileSize%></p>
+          <p class="text-[clamp(0.75rem,3.7vw,1rem)]"><%=file.uploadDate%></p>
+        </div>
       </div>
-      <p class="w-1/8"><%=file.fileSize%></p>
-      <p class="w-2/8"><%=file.uploadDate%></p>
-      <div class="flex w-1/8 justify-end gap-2">
+
+      <div class="flex flex-col justify-end gap-2 md:flex-row">
         <button class="share-dialog-button">
           <svg
             class="hover:cursor-pointer hover:fill-blue-500"
@@ -27,7 +32,7 @@
           </svg>
         </button>
 
-        <a href="<%=file.filePath%>">
+        <a class="flex items-center" href="<%=file.filePath%>">
           <svg
             class="hover:cursor-pointer hover:fill-green-500"
             xmlns="http://www.w3.org/2000/svg"
