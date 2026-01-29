@@ -32,6 +32,7 @@ app.get('/folders', controllers.foldersGet);
 app.get('/folder/:id', controllers.folderGet);
 app.post('/create-folder', controllers.createFolderPost);
 app.post('/modify-folder/:id', controllers.modifyFolderPost);
+app.get('/shared-folder/:id', controllers.sharedFolder);
 app.post('/share-folder/:id', controllers.shareFolder);
 
 app.get('/register', controllers.registerGet);

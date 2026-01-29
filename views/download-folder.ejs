@@ -1,0 +1,28 @@
+<div class="flex flex-col items-center pt-8">
+  <p class="mb-8 text-center">
+    This file was shared by <span class="font-bold"><%=share.user.fullName%></span>, and will
+    <span class="font-bold">expire</span> on <%=share.validUntil%>
+  </p>
+  <h1 class="text-xl font-bold"><%=share.folder.folderName%></h1>
+  <div class="w-full max-w-xl px-8 pt-4 pb-8">
+    <% share.folder.files.forEach((file, i)=> { %>
+    <div
+      class="<%=i % 2 !== 0 ? 'bg-slate-100' : 'bg-slate-200'%> flex w-full items-center justify-center border-2 border-slate-200 p-2 shadow-md"
+    >
+      <p class="mr-4 flex-1 truncate"><%=file.fileName%></p>
+      <p class="mr-4 text-right"><%=file.fileSize%></p>
+      <svg
+        class="hover:cursor-pointer hover:fill-green-500"
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+      >
+        <path
+          d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+        />
+      </svg>
+    </div>
+    <%}) %>
+  </div>
+</div>

@@ -33,4 +33,22 @@ async function findUserShares(userId) {
   return shares;
 }
 
-export default { createFolderShare, findUserShares };
+async function findFolderShare(shareId) {
+  const share = await prisma.folderShares.findUnique({
+    where: {
+      id: shareId,
+    },
+    select: {
+      id: true,
+      folderId: true,
+      validUntil: true,
+      folder: {
+        select: { folderName: true, files: { select: { fileName: true, fileSize: true, uploadDate: true } } },
+      },
+      user: { select: { firstName: true, lastName: true } },
+    },
+  });
+  return share;
+}
+
+export default { createFolderShare, findUserShares, findFolderShare };

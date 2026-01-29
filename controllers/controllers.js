@@ -141,6 +141,15 @@ const shareFolder = async (req, res) => {
   // res.redirect(`/shared-folder/${shareId}`);
 };
 
+const sharedFolder = async (req, res) => {
+  const shareId = Number(req.params.id);
+  const url = req.protocol + '://' + req.get('host') + req.originalUrl;
+  let share = await folderSharesModel.findFolderShare(shareId);
+  share = helpers.formatFileShare(share, url);
+  console.log(share);
+  res.render('shared-folder', { share });
+};
+
 export default {
   login,
   registerGet,
@@ -155,4 +164,5 @@ export default {
   sharedFile,
   myShares,
   shareFolder,
+  sharedFolder,
 };
