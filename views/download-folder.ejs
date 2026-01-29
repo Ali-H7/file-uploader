@@ -1,5 +1,5 @@
 <div class="flex flex-col items-center pt-8">
-  <p class="mb-8 text-center">
+  <p class="mb-8 px-8 text-center">
     This file was shared by <span class="font-bold"><%=share.user.fullName%></span>, and will
     <span class="font-bold">expire</span> on <%=share.validUntil%>
   </p>
@@ -7,12 +7,14 @@
   <div class="w-full max-w-xl px-8 pt-4 pb-8">
     <% share.folder.files.forEach((file, i)=> { %>
     <div
-      class="<%=i % 2 !== 0 ? 'bg-slate-100' : 'bg-slate-200'%> flex w-full items-center justify-center border-2 border-slate-200 p-2 shadow-md"
+      class="<%=i % 2 !== 0 ? 'bg-slate-100' : 'bg-slate-200'%> flex w-full items-center gap-4 border-2 border-slate-200 p-2 shadow-md"
     >
-      <p class="mr-4 flex-1 truncate"><%=file.fileName%></p>
-      <p class="mr-4 text-right"><%=file.fileSize%></p>
+      <div class="flex-1 truncate text-[clamp(0.875rem,3.7vw,1rem)] sm:flex sm:items-center">
+        <p class="truncate sm:flex-1"><%=file.fileName%></p>
+        <p class=""><%=file.fileSize%></p>
+      </div>
       <svg
-        class="hover:cursor-pointer hover:fill-green-500"
+        class="h-6 w-6 hover:cursor-pointer hover:fill-green-500"
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
         viewBox="0 -960 960 960"
