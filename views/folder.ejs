@@ -46,7 +46,7 @@
               <% }) %>
             </select>
 
-            <p>
+            <p class="text-center">
               <span class="font-bold">Warning:</span> This will update the folder to match your current selection.
             </p>
 
@@ -61,7 +61,7 @@
       </dialog>
       <% } %>
     </div>
-    <% if (folder.files.length > 0) { %> <%- include('folder-content', {folder}) %> <% } else { %> <%-
+    <% if (folder.files.length > 0) { %> <%- include('folder-content', {folder}) %> <% } else if (files.length > 0 && folder.files.length == 0) { %> <%-
     include('warning', { text: "This folder is empty. Please add files using the modify button" }) %> <% } %>
     <script>
       const dialog = document.querySelector('#dialog');

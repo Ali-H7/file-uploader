@@ -1,7 +1,6 @@
 import validateUserInput from '../middleware/validation.js';
 import { validationResult, matchedData } from 'express-validator';
-import multer from 'multer';
-const upload = multer({ dest: 'uploads/' });
+import upload from '../lib/cloudinary.js';
 import userModel from '../services/userModel.js';
 import fileModel from '../services/fileModel.js';
 import folderModel from '../services/folderModel.js';
@@ -41,6 +40,7 @@ const uploadPost = [
     const { id } = req.user;
     const { files } = req;
     await fileModel.addFiles(files, id);
+    console.log(files);
     res.redirect('/files');
   },
 ];
