@@ -149,6 +149,14 @@ const sharedFolder = async (req, res) => {
   res.render('shared-folder', { share });
 };
 
+function handleNonExistentPages(req, res) {
+  res.render('error-page', { error: null });
+}
+
+function handleErrors(err, req, res, next) {
+  res.render('error-page', { error: err.message });
+}
+
 export default {
   login,
   registerGet,
@@ -164,4 +172,6 @@ export default {
   myShares,
   shareFolder,
   sharedFolder,
+  handleNonExistentPages,
+  handleErrors,
 };

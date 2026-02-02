@@ -7,8 +7,12 @@
       This file was shared by <span class="font-bold"><%=share.user.fullName%></span>, and will
       <span class="font-bold">expire</span> on <%=share.validUntil%>
     </p>
-    <button class="w-full rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600">
-      Download
-    </button>
+    <a href="<%=share.file.filePath%>">
+      <button
+        class="w-full rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:cursor-pointer hover:bg-blue-600"
+      >
+        Download
+      </button>
+    </a>
   </div>
 </div>

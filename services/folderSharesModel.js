@@ -43,7 +43,10 @@ async function findFolderShare(shareId) {
       folderId: true,
       validUntil: true,
       folder: {
-        select: { folderName: true, files: { select: { fileName: true, fileSize: true, uploadDate: true } } },
+        select: {
+          folderName: true,
+          files: { select: { fileName: true, fileSize: true, uploadDate: true, filePath: true } },
+        },
       },
       user: { select: { firstName: true, lastName: true } },
     },

@@ -49,6 +49,10 @@ app.get('/my-shares', [validateUserLogin, controllers.myShares]);
 app.post('/login', auth.login);
 app.get('/logout', auth.logout);
 
+// errors
+app.use(controllers.handleNonExistentPages);
+app.use(controllers.handleErrors);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {
   if (error) {
