@@ -1,6 +1,4 @@
-import validateUserInput from '../middleware/validation.js';
 import { validationResult, matchedData } from 'express-validator';
-import upload from '../lib/cloudinary.js';
 import userModel from '../services/userModel.js';
 import fileModel from '../services/fileModel.js';
 import folderModel from '../services/folderModel.js';
@@ -19,31 +17,25 @@ const registerGet = (req, res) => {
   res.render('register', { userInput: {}, errors: [] });
 };
 
-const registerPost = [
-  validateUserInput,
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const { body: userInput } = req;
-      res.render('register', { userInput, errors: errors.array({ onlyFirstError: true }) });
-    } else {
-      const userObject = matchedData(req);
-      await userModel.createUser(userObject);
-      res.redirect('/login');
-    }
-  },
-];
+const registerPost = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const { body: userInput } = req;
+    res.render('register', { userInput, errors: errors.array({ onlyFirstError: true }) });
+  } else {
+    const userObject = matchedData(req);
+    await userModel.createUser(userObject);
+    res.redirect('/login');
+  }
+};
 
-const uploadPost = [
-  upload.array('uploadedFiles'),
-  async (req, res) => {
-    const { id } = req.user;
-    const { files } = req;
-    await fileModel.addFiles(files, id);
-    console.log(files);
-    res.redirect('/files');
-  },
-];
+const uploadPost = async (req, res) => {
+  const { id } = req.user;
+  const { files } = req;
+  await fileModel.addFiles(files, id);
+  console.log(files);
+  res.redirect('/files');
+};
 
 const filesGet = async (req, res) => {
   const { id } = req.user;

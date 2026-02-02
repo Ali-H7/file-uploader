@@ -2,9 +2,10 @@ import 'dotenv/config';
 import express from 'express';
 import path from 'node:path';
 import auth from './lib/auth.js';
-import controllers from './controllers/controllers.js';
-import validateUserLogin from './middleware/validateUserLogin.js';
 import flash from 'connect-flash';
+import controllers from './controllers/controllers.js';
+import middlewares from './middlewares/middlewares.js';
+import upload from './lib/cloudinary.js';
 const __dirname = import.meta.dirname;
 
 const app = express();
@@ -23,32 +24,32 @@ app.use(flash());
 
 // routes
 app.get('/', [
-  validateUserLogin,
+  middlewares.isLoggedIn,
   (req, res) => {
     res.render('index');
   },
 ]);
 app.get('/login', controllers.login);
 
-app.get('/files', [validateUserLogin, controllers.filesGet]);
-app.post('/share-file/:id', [validateUserLogin, controllers.shareFile]);
+app.get('/files', [middlewares.isLoggedIn, controllers.filesGet]);
+app.post('/share-file/:id', [middlewares.isLoggedIn, controllers.shareFile]);
 app.get('/shared-file/:id', controllers.sharedFile);
 
-app.get('/folders', [validateUserLogin, controllers.foldersGet]);
-app.get('/folder/:id', [validateUserLogin, controllers.folderGet]);
-app.post('/create-folder', [validateUserLogin, controllers.createFolderPost]);
-app.post('/modify-folder/:id', [validateUserLogin, controllers.modifyFolderPost]);
+app.get('/folders', [middlewares.isLoggedIn, controllers.foldersGet]);
+app.get('/folder/:id', [middlewares.isLoggedIn, controllers.folderGet]);
+app.post('/create-folder', [middlewares.isLoggedIn, controllers.createFolderPost]);
+app.post('/modify-folder/:id', [middlewares.isLoggedIn, controllers.modifyFolderPost]);
 app.get('/shared-folder/:id', controllers.sharedFolder);
-app.post('/share-folder/:id', [validateUserLogin, controllers.shareFolder]);
+app.post('/share-folder/:id', [middlewares.isLoggedIn, controllers.shareFolder]);
 
 app.get('/register', controllers.registerGet);
-app.post('/register', controllers.registerPost);
+app.post('/register', [middlewares.validateUserInput, controllers.registerPost]);
 
-app.post('/upload', [validateUserLogin, controllers.uploadPost]);
+app.post('/upload', [middlewares.isLoggedIn, upload.array('uploadedFiles'), controllers.uploadPost]);
 
-app.get('/my-shares', [validateUserLogin, controllers.myShares]);
+app.get('/my-shares', [middlewares.isLoggedIn, controllers.myShares]);
 
-app.post('/login', auth.login);
+app.post('/login', [middlewares.normalizeLoginInput, auth.login]);
 app.get('/logout', auth.logout);
 
 // errors
