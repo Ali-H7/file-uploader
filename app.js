@@ -4,6 +4,7 @@ import path from 'node:path';
 import auth from './lib/auth.js';
 import controllers from './controllers/controllers.js';
 import validateUserLogin from './middleware/validateUserLogin.js';
+import flash from 'connect-flash';
 const __dirname = import.meta.dirname;
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(auth.appSession);
 app.use(auth.passport.session());
 app.use(auth.setCurrentUser);
+app.use(flash());
 
 // routes
 app.get('/', [

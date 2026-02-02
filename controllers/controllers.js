@@ -10,7 +10,7 @@ import helpers from '../helpers/helpers.js';
 
 const login = (req, res) => {
   if (req.user) return res.redirect('/');
-  const loginErrorMsg = req.session.messages ? req.session.messages.shift() : null;
+  const loginErrorMsg = req.flash('error')[0] ?? null;
   res.render('login', { loginErrorMsg });
 };
 
