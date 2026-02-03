@@ -5,7 +5,7 @@ import auth from './lib/auth.js';
 import flash from 'connect-flash';
 import controllers from './controllers/controllers.js';
 import middlewares from './middlewares/middlewares.js';
-import upload from './lib/cloudinary.js';
+import { upload } from './lib/cloudinary.js';
 const __dirname = import.meta.dirname;
 
 const app = express();

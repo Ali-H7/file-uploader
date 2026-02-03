@@ -3,6 +3,7 @@ import { prisma } from '../lib/prisma.js';
 async function addFiles(filesArray, userId) {
   const files = filesArray.map((fileObject) => {
     return {
+      cloudinaryId: fileObject.filename,
       fileName: fileObject.originalname,
       fileType: fileObject.mimetype,
       fileSize: fileObject.size,
@@ -31,11 +32,15 @@ async function findAllFiles(userId) {
 }
 
 async function deleteFile(fileId) {
-  await prisma.file.delete({
+  const file = await prisma.file.delete({
     where: {
       id: fileId,
     },
+    select: {
+      cloudinaryId: true,
+    },
   });
+  return file.cloudinaryId;
 }
 
 export default { addFiles, findAllFiles, deleteFile };

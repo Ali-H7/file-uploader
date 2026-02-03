@@ -5,6 +5,7 @@ import folderModel from '../services/folderModel.js';
 import fileSharesModel from '../services/fileSharesModel.js';
 import folderSharesModel from '../services/folderSharesModel.js';
 import helpers from '../helpers/helpers.js';
+import { cloudinary } from '../lib/cloudinary.js';
 
 const login = (req, res) => {
   if (req.user) return res.redirect('/');
@@ -150,7 +151,8 @@ function handleErrors(err, req, res, next) {
 
 const deleteFile = async (req, res) => {
   const fileId = Number(req.params.id);
-  await fileModel.deleteFile(fileId);
+  const cloudinaryId = await fileModel.deleteFile(fileId);
+  await cloudinary.uploader.destroy(cloudinaryId);
   res.redirect(`/files`);
 };
 
