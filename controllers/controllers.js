@@ -148,6 +148,12 @@ function handleErrors(err, req, res, next) {
   res.render('error-page', { error: err.message });
 }
 
+const deleteFile = async (req, res) => {
+  const fileId = Number(req.params.id);
+  await fileModel.deleteFile(fileId);
+  res.redirect(`/files`);
+};
+
 export default {
   login,
   registerGet,
@@ -165,4 +171,5 @@ export default {
   sharedFolder,
   handleNonExistentPages,
   handleErrors,
+  deleteFile,
 };

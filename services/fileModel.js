@@ -30,4 +30,12 @@ async function findAllFiles(userId) {
   return files;
 }
 
-export default { addFiles, findAllFiles };
+async function deleteFile(fileId) {
+  await prisma.file.delete({
+    where: {
+      id: fileId,
+    },
+  });
+}
+
+export default { addFiles, findAllFiles, deleteFile };

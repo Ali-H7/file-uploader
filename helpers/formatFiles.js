@@ -7,7 +7,6 @@ export default function formatFiles(files) {
       ...file,
       fileSize: prettyBytes(file.fileSize),
       uploadDate: formateDate(file.uploadDate),
-      shared: file.fileShares.length > 0,
     };
   });
 }
