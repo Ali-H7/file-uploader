@@ -33,7 +33,6 @@ const uploadPost = async (req, res) => {
   const { id } = req.user;
   const { files } = req;
   await fileModel.addFiles(files, id);
-  console.log(files);
   res.redirect('/files');
 };
 

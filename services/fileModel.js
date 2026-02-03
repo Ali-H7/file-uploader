@@ -23,6 +23,9 @@ async function findAllFiles(userId) {
     orderBy: {
       id: 'desc',
     },
+    include: {
+      fileShares: true,
+    },
   });
   return files;
 }

@@ -46,7 +46,7 @@ model FileShares {
   id         Int      @id @default(autoincrement())
   userId     Int      @map("user_id")
   user       User     @relation(fields: [userId], references: [id])
-  fileId     Int      @map("file_id")
+  fileId     Int      @unique @map("file_id")
   file       File     @relation(fields: [fileId], references: [id])
   validUntil DateTime @map("valid_until")
   shareDate  DateTime @default(now()) @map("share_date")
