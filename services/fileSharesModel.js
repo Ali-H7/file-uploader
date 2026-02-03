@@ -35,17 +35,17 @@ async function findUserShares(userId) {
       id: true,
       validUntil: true,
       file: {
-        select: { fileName: true },
+        select: { fileName: true, cloudinaryId: true },
       },
     },
   });
   return shares;
 }
 
-async function findFileShare(shareId) {
-  const share = await prisma.fileShares.findUnique({
+async function findFileShare(cloudinaryId) {
+  const share = await prisma.fileShares.findFirst({
     where: {
-      id: shareId,
+      file: { cloudinaryId },
     },
     select: {
       validUntil: true,

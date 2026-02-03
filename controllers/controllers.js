@@ -104,12 +104,13 @@ const shareFile = async (req, res) => {
   const { duration } = req.body;
   const date = helpers.createDateObject(duration);
   const shareId = await fileSharesModel.createFileShare(userId, fileId, date);
-  res.redirect(`/shared-file/${shareId}`);
+  res.redirect(`/file/share/${shareId}`);
 };
 
 const sharedFile = async (req, res) => {
-  const shareId = Number(req.params.id);
+  const shareId = `share/${req.params.cloudinaryId}`;
   const url = req.protocol + '://' + req.get('host') + req.originalUrl;
+  console.log(shareId);
   let share = await fileSharesModel.findFileShare(shareId);
   share = helpers.formatFileShare(share, url);
   res.render('shared-file', { share });
@@ -120,6 +121,7 @@ const myShares = async (req, res) => {
   const fileShares = await fileSharesModel.findUserShares(userId);
   const folderShares = await folderSharesModel.findUserShares(userId);
   const shares = helpers.formatMyShares(fileShares, folderShares);
+  console.log(shares);
   res.render('my-shares', { shares });
 };
 

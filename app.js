@@ -33,7 +33,7 @@ app.get('/login', controllers.login);
 
 app.get('/files', [middlewares.isLoggedIn, controllers.filesGet]);
 app.post('/share-file/:id', [middlewares.isLoggedIn, controllers.shareFile]);
-app.get('/shared-file/:id', controllers.sharedFile);
+app.get('/file/share/:cloudinaryId', controllers.sharedFile);
 app.post('/delete-file/:id', controllers.deleteFile);
 
 app.get('/folders', [middlewares.isLoggedIn, controllers.foldersGet]);

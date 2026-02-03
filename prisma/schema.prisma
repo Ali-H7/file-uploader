@@ -30,7 +30,7 @@ model User {
 model File {
   id           Int         @id @default(autoincrement())
   fileName     String      @map("file_name") @db.VarChar(255)
-  cloudinaryId String      @map("cloudinary_id") @db.VarChar(255)
+  cloudinaryId String      @unique @map("cloudinary_id") @db.VarChar(255)
   fileType     String      @map("file_type") @db.VarChar(50)
   fileSize     Int         @map("file_size")
   filePath     String      @map("file_path") @db.VarChar(255)
