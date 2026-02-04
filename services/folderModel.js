@@ -35,10 +35,11 @@ async function findFolderContent(userId, folderUrlId) {
   return folder;
 }
 
-async function updateFolder(folderId, filesToAdd, filesToRemove) {
+async function updateFolder(folderUrlId, userId, filesToAdd, filesToRemove) {
   await prisma.folder.update({
     where: {
-      id: folderId,
+      urlId: folderUrlId,
+      userId,
     },
     data: {
       files: {

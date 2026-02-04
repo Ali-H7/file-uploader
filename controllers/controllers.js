@@ -75,7 +75,8 @@ const folderGet = async (req, res) => {
 };
 
 const modifyFolderPost = async (req, res) => {
-  const folderId = Number(req.params.id);
+  const userId = req.user.id;
+  const folderUrlId = req.params.urlId;
   const { selectedFiles } = req.body;
   const filesId =
     selectedFiles === undefined
@@ -83,7 +84,7 @@ const modifyFolderPost = async (req, res) => {
       : !Array.isArray(selectedFiles)
         ? [Number(selectedFiles)]
         : selectedFiles.map((fileId) => Number(fileId));
-  const folder = await folderModel.findFolderContent(folderId);
+  const folder = await folderModel.findFolderContent(userId, folderUrlId);
   const currentFiles = folder.files.map((file) => file.id);
   const filesToAdd = filesId.filter((fileId) => !currentFiles.includes(fileId));
   const filesToDelete = currentFiles.filter((fileId) => !filesId.includes(fileId));
@@ -95,9 +96,9 @@ const modifyFolderPost = async (req, res) => {
     const deleteFiles = filesToDelete.map((file) => {
       return { id: file };
     });
-    await folderModel.updateFolder(folderId, addFiles, deleteFiles);
+    await folderModel.updateFolder(folderUrlId, userId, addFiles, deleteFiles);
   }
-  res.redirect(`/folder/${folderId}`);
+  res.redirect(`/folder/${folderUrlId}`);
 };
 
 const shareFile = async (req, res) => {

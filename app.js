@@ -40,7 +40,7 @@ app.post('/delete-share-file/:id', controllers.deleteFileShare);
 app.get('/folders', [middlewares.isLoggedIn, controllers.foldersGet]);
 app.get('/folder/:urlId', [middlewares.isLoggedIn, controllers.folderGet]);
 app.post('/create-folder', [middlewares.isLoggedIn, controllers.createFolderPost]);
-app.post('/modify-folder/:id', [middlewares.isLoggedIn, controllers.modifyFolderPost]);
+app.post('/modify-folder/:urlId', [middlewares.isLoggedIn, controllers.modifyFolderPost]);
 app.get('/shared-folder/:id', controllers.sharedFolder);
 app.post('/share-folder/:id', [middlewares.isLoggedIn, controllers.shareFolder]);
 app.post('/delete-share-folder/:id', controllers.deleteFolderShare);
