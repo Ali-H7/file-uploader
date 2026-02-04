@@ -16,8 +16,15 @@ async function createFileShare(userId, fileId, date) {
           },
         },
       },
+      include: {
+        file: {
+          select: {
+            cloudinaryId: true,
+          },
+        },
+      },
     });
-    return share.id;
+    return share.file.cloudinaryId;
   } catch (error) {
     console.log(error);
     if (error.code === 'P2002')
