@@ -47,6 +47,7 @@ const filesGet = async (req, res) => {
 const foldersGet = async (req, res) => {
   const { id } = req.user;
   const folders = await folderModel.findAllFolders(id);
+  console.log(folders);
   res.render('folders', { folders });
 };
 
@@ -59,9 +60,9 @@ const createFolderPost = async (req, res) => {
 
 const folderGet = async (req, res) => {
   const userId = req.user.id;
-  const folderId = Number(req.params.id);
+  const folderUrlId = req.params.urlId;
   const userFiles = await fileModel.findAllFiles(userId);
-  const userFolder = await folderModel.findFolderContent(folderId);
+  const userFolder = await folderModel.findFolderContent(userId, folderUrlId);
   const files = userFiles.map((file) => {
     return { ...file, selected: userFolder.files.map((folderFile) => folderFile.id).includes(file.id) };
   });
@@ -69,6 +70,7 @@ const folderGet = async (req, res) => {
     ...userFolder,
     files: helpers.formatFiles(userFolder.files),
   };
+  console.log(folder);
   res.render('folder', { folder, files });
 };
 
@@ -121,6 +123,7 @@ const myShares = async (req, res) => {
   const fileShares = await fileSharesModel.findUserShares(userId);
   const folderShares = await folderSharesModel.findUserShares(userId);
   const shares = helpers.formatMyShares(fileShares, folderShares);
+  console.log(shares);
   res.render('my-shares', { shares });
 };
 
@@ -146,6 +149,7 @@ function handleNonExistentPages(req, res) {
 }
 
 function handleErrors(err, req, res, next) {
+  console.error(err);
   res.render('error-page', { error: err.message });
 }
 

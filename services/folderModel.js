@@ -22,10 +22,11 @@ async function findAllFolders(userId) {
   return folders;
 }
 
-async function findFolderContent(folderId) {
+async function findFolderContent(userId, folderUrlId) {
   const folder = await prisma.folder.findUnique({
     where: {
-      id: folderId,
+      urlId: folderUrlId,
+      userId,
     },
     include: {
       files: true,

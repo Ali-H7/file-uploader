@@ -61,6 +61,7 @@ model Folder {
   createDate   DateTime       @default(now()) @map("create_date")
   userId       Int            @map("user_id")
   user         User           @relation(fields: [userId], references: [id])
+  urlId        String         @unique @default(uuid()) @map("url_id") @db.Uuid
   folderShares FolderShares[]
   files        File[]
 

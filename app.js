@@ -38,7 +38,7 @@ app.post('/delete-file/:id', controllers.deleteFile);
 app.post('/delete-share-file/:id', controllers.deleteFileShare);
 
 app.get('/folders', [middlewares.isLoggedIn, controllers.foldersGet]);
-app.get('/folder/:id', [middlewares.isLoggedIn, controllers.folderGet]);
+app.get('/folder/:urlId', [middlewares.isLoggedIn, controllers.folderGet]);
 app.post('/create-folder', [middlewares.isLoggedIn, controllers.createFolderPost]);
 app.post('/modify-folder/:id', [middlewares.isLoggedIn, controllers.modifyFolderPost]);
 app.get('/shared-folder/:id', controllers.sharedFolder);
