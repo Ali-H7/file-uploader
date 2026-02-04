@@ -54,4 +54,13 @@ async function findFolderShare(shareId) {
   return share;
 }
 
-export default { createFolderShare, findUserShares, findFolderShare };
+async function deleteFolderShare(userId, shareId) {
+  await prisma.folderShares.delete({
+    where: {
+      id: shareId,
+      userId,
+    },
+  });
+}
+
+export default { createFolderShare, findUserShares, findFolderShare, deleteFolderShare };

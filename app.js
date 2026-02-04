@@ -35,6 +35,7 @@ app.get('/files', [middlewares.isLoggedIn, controllers.filesGet]);
 app.post('/share-file/:id', [middlewares.isLoggedIn, controllers.shareFile]);
 app.get('/file/share/:cloudinaryId', controllers.sharedFile);
 app.post('/delete-file/:id', controllers.deleteFile);
+app.post('/delete-share-file/:id', controllers.deleteFileShare);
 
 app.get('/folders', [middlewares.isLoggedIn, controllers.foldersGet]);
 app.get('/folder/:id', [middlewares.isLoggedIn, controllers.folderGet]);
@@ -42,6 +43,7 @@ app.post('/create-folder', [middlewares.isLoggedIn, controllers.createFolderPost
 app.post('/modify-folder/:id', [middlewares.isLoggedIn, controllers.modifyFolderPost]);
 app.get('/shared-folder/:id', controllers.sharedFolder);
 app.post('/share-folder/:id', [middlewares.isLoggedIn, controllers.shareFolder]);
+app.post('/delete-share-folder/:id', controllers.deleteFolderShare);
 
 app.get('/register', controllers.registerGet);
 app.post('/register', [middlewares.validateUserInput, controllers.registerPost]);

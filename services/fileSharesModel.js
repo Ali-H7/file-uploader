@@ -26,7 +26,6 @@ async function createFileShare(userId, fileId, date) {
     });
     return share.file.cloudinaryId;
   } catch (error) {
-    console.log(error);
     if (error.code === 'P2002')
       throw new Error(`You're already sharing this file. Please delete it from your shares before attempting again.`);
     else throw error;
@@ -62,4 +61,13 @@ async function findFileShare(cloudinaryId) {
   });
   return share;
 }
-export default { createFileShare, findUserShares, findFileShare };
+
+async function deleteFileShare(userId, shareId) {
+  await prisma.fileShares.delete({
+    where: {
+      id: shareId,
+      userId,
+    },
+  });
+}
+export default { createFileShare, findUserShares, findFileShare, deleteFileShare };

@@ -8,7 +8,6 @@ export default function formatFolderShare(shareObject, url) {
 
   if (shareObject.folder) {
     const formattedFiles = shareObject.folder.files.map((file) => {
-      console.log(file.filePath);
       return {
         ...file,
         fileSize: prettyBytes(file.fileSize),

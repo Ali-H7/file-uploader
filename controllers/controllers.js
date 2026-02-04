@@ -111,6 +111,7 @@ const sharedFile = async (req, res) => {
   const shareId = `share/${req.params.cloudinaryId}`;
   const url = req.protocol + '://' + req.get('host') + req.originalUrl;
   let share = await fileSharesModel.findFileShare(shareId);
+  if (!share) return res.redirect('/404');
   share = helpers.formatFileShare(share, url);
   res.render('shared-file', { share });
 };
@@ -120,7 +121,6 @@ const myShares = async (req, res) => {
   const fileShares = await fileSharesModel.findUserShares(userId);
   const folderShares = await folderSharesModel.findUserShares(userId);
   const shares = helpers.formatMyShares(fileShares, folderShares);
-  console.log(shares);
   res.render('my-shares', { shares });
 };
 
@@ -138,7 +138,6 @@ const sharedFolder = async (req, res) => {
   const url = req.protocol + '://' + req.get('host') + req.originalUrl;
   let share = await folderSharesModel.findFolderShare(shareId);
   share = helpers.formatFileShare(share, url);
-  console.log(share);
   res.render('shared-folder', { share });
 };
 
@@ -155,6 +154,20 @@ const deleteFile = async (req, res) => {
   const cloudinaryId = await fileModel.deleteFile(fileId);
   await cloudinary.uploader.destroy(cloudinaryId);
   res.redirect(`/files`);
+};
+
+const deleteFileShare = async (req, res) => {
+  const userId = req.user.id;
+  const shareId = Number(req.params.id);
+  await fileSharesModel.deleteFileShare(userId, shareId);
+  res.redirect(`/my-shares`);
+};
+
+const deleteFolderShare = async (req, res) => {
+  const userId = req.user.id;
+  const shareId = Number(req.params.id);
+  await folderSharesModel.deleteFolderShare(userId, shareId);
+  res.redirect(`/my-shares`);
 };
 
 export default {
@@ -175,4 +188,6 @@ export default {
   handleNonExistentPages,
   handleErrors,
   deleteFile,
+  deleteFileShare,
+  deleteFolderShare,
 };

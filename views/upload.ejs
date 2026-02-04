@@ -7,7 +7,7 @@
     enctype="multipart/form-data"
   >
     <label
-      class="w-full max-w-md border-2 border-dashed border-slate-300 bg-slate-100 p-8 hover:cursor-pointer hover:bg-slate-200"
+      class="upload-label w-full max-w-md border-2 border-dashed border-slate-300 bg-slate-100 p-8 hover:cursor-pointer hover:bg-slate-200"
       for="uploadedFiles"
     >
       <div class="flex flex-col items-center justify-center">
@@ -25,7 +25,7 @@
       <p class="upload-button-text">Upload</p>
       <div class="upload-spinner hidden">
         <svg
-          class="animate-spin text-gray-300"
+          class="animate-spin text-blue-500"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -89,11 +89,15 @@
   uploadButton.addEventListener('click', (e) => {
     e.preventDefault();
     const uploadForm = document.querySelector('.upload-form');
+    const uploadLabel = document.querySelector('.upload-label');
     const spinner = document.querySelector('.upload-spinner');
     const uploadButtonText = document.querySelector('.upload-button-text');
     uploadButtonText.textContent = 'Uploading... ';
     spinner.classList.remove('hidden');
     uploadButton.disabled = true;
+    uploadButton.classList.remove('bg-blue-500', 'hover:bg-blue-600', 'hover:cursor-pointer');
+    uploadButton.classList.add('bg-neutral-400');
+    uploadLabel.classList.remove('hover:cursor-pointer', 'hover:bg-slate-200');
     fileInput.addEventListener('click', (input) => input.preventDefault());
     uploadForm.requestSubmit();
   });
