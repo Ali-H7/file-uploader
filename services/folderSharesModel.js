@@ -27,16 +27,16 @@ async function findUserShares(userId) {
     select: {
       id: true,
       validUntil: true,
-      folder: { select: { folderName: true } },
+      folder: { select: { folderName: true, urlId: true } },
     },
   });
   return shares;
 }
 
-async function findFolderShare(shareId) {
-  const share = await prisma.folderShares.findUnique({
+async function findFolderShare(urlId) {
+  const share = await prisma.folderShares.findFirst({
     where: {
-      id: shareId,
+      folder: { urlId },
     },
     select: {
       id: true,

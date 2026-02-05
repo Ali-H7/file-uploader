@@ -124,7 +124,6 @@ const myShares = async (req, res) => {
   const fileShares = await fileSharesModel.findUserShares(userId);
   const folderShares = await folderSharesModel.findUserShares(userId);
   const shares = helpers.formatMyShares(fileShares, folderShares);
-  console.log(shares);
   res.render('my-shares', { shares });
 };
 
@@ -138,9 +137,9 @@ const shareFolder = async (req, res) => {
 };
 
 const sharedFolder = async (req, res) => {
-  const shareId = Number(req.params.id);
+  const urlId = req.params.urlId;
   const url = req.protocol + '://' + req.get('host') + req.originalUrl;
-  let share = await folderSharesModel.findFolderShare(shareId);
+  let share = await folderSharesModel.findFolderShare(urlId);
   share = helpers.formatFileShare(share, url);
   res.render('shared-folder', { share });
 };
