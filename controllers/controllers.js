@@ -61,12 +61,16 @@ const createFolderPost = async (req, res) => {
 const folderGet = async (req, res) => {
   const userId = req.user.id;
   const folderUrlId = req.params.urlId;
+  const userFiles = await fileModel.findAllFiles(userId);
   const userFolder = await folderModel.findFolderContent(userId, folderUrlId);
+  const files = userFiles.map((file) => {
+    return { ...file, selected: userFolder.files.map((folderFile) => folderFile.id).includes(file.id) };
+  });
   const folder = {
     ...userFolder,
     files: helpers.formatFiles(userFolder.files),
   };
-  res.render('folder', { folder, files: folder.files });
+  res.render('folder', { folder, files });
 };
 
 const modifyFolderPost = async (req, res) => {
