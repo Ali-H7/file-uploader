@@ -70,7 +70,6 @@ const folderGet = async (req, res) => {
     ...userFolder,
     files: helpers.formatFiles(userFolder.files),
   };
-  console.log(folder);
   res.render('folder', { folder, files });
 };
 
@@ -154,8 +153,9 @@ function handleErrors(err, req, res, next) {
 }
 
 const deleteFile = async (req, res) => {
+  const userId = req.user.id;
   const fileId = Number(req.params.id);
-  const cloudinaryId = await fileModel.deleteFile(fileId);
+  const cloudinaryId = await fileModel.deleteFile(fileId, userId);
   await cloudinary.uploader.destroy(cloudinaryId);
   res.redirect(`/files`);
 };

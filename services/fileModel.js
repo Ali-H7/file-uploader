@@ -31,10 +31,11 @@ async function findAllFiles(userId) {
   return files;
 }
 
-async function deleteFile(fileId) {
+async function deleteFile(fileId, userId) {
   const file = await prisma.file.delete({
     where: {
       id: fileId,
+      userId,
     },
     select: {
       cloudinaryId: true,
