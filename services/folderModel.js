@@ -50,4 +50,13 @@ async function updateFolder(folderUrlId, userId, filesToAdd, filesToRemove) {
   });
 }
 
-export default { createFolder, findAllFolders, findFolderContent, updateFolder };
+async function deleteFolder(userId, folderId) {
+  await prisma.folder.delete({
+    where: {
+      id: folderId,
+      userId,
+    },
+  });
+}
+
+export default { createFolder, findAllFolders, findFolderContent, updateFolder, deleteFolder };

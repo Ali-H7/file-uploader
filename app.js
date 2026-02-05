@@ -31,28 +31,29 @@ app.get('/', [
 ]);
 app.get('/login', controllers.login);
 
-app.get('/files', [middlewares.isLoggedIn, controllers.filesGet]);
-app.post('/share-file/:id', [middlewares.isLoggedIn, controllers.shareFile]);
+app.get('/files', middlewares.isLoggedIn, controllers.filesGet);
+app.post('/share-file/:id', middlewares.isLoggedIn, controllers.shareFile);
 app.get('/file/share/:cloudinaryId', controllers.sharedFile);
-app.post('/delete-file/:id', controllers.deleteFile);
+app.post('/delete-file/:id', middlewares.isLoggedIn, controllers.deleteFile);
 app.post('/delete-share-file/:id', controllers.deleteFileShare);
 
-app.get('/folders', [middlewares.isLoggedIn, controllers.foldersGet]);
-app.get('/folder/:urlId', [middlewares.isLoggedIn, controllers.folderGet]);
-app.post('/create-folder', [middlewares.isLoggedIn, controllers.createFolderPost]);
-app.post('/modify-folder/:urlId', [middlewares.isLoggedIn, controllers.modifyFolderPost]);
+app.get('/folders', middlewares.isLoggedIn, controllers.foldersGet);
+app.get('/folder/:urlId', middlewares.isLoggedIn, controllers.folderGet);
+app.post('/create-folder', middlewares.isLoggedIn, controllers.createFolderPost);
+app.post('/modify-folder/:urlId', middlewares.isLoggedIn, controllers.modifyFolderPost);
 app.get('/shared-folder/:id', controllers.sharedFolder);
-app.post('/share-folder/:id', [middlewares.isLoggedIn, controllers.shareFolder]);
+app.post('/share-folder/:id', middlewares.isLoggedIn, controllers.shareFolder);
+app.post('/delete-folder/:id', middlewares.isLoggedIn, controllers.deleteFolder);
 app.post('/delete-share-folder/:id', controllers.deleteFolderShare);
 
 app.get('/register', controllers.registerGet);
-app.post('/register', [middlewares.validateUserInput, controllers.registerPost]);
+app.post('/register', middlewares.validateUserInput, controllers.registerPost);
 
-app.post('/upload', [middlewares.isLoggedIn, upload.array('uploadedFiles'), controllers.uploadPost]);
+app.post('/upload', middlewares.isLoggedIn, upload.array('uploadedFiles'), controllers.uploadPost);
 
-app.get('/my-shares', [middlewares.isLoggedIn, controllers.myShares]);
+app.get('/my-shares', middlewares.isLoggedIn, controllers.myShares);
 
-app.post('/login', [middlewares.normalizeLoginInput, auth.login]);
+app.post('/login', middlewares.normalizeLoginInput, auth.login);
 app.get('/logout', auth.logout);
 
 // errors

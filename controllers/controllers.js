@@ -175,6 +175,13 @@ const deleteFolderShare = async (req, res) => {
   res.redirect(`/my-shares`);
 };
 
+const deleteFolder = async (req, res) => {
+  const userId = req.user.id;
+  const folderId = Number(req.params.id);
+  await folderModel.deleteFolder(userId, folderId);
+  res.redirect(`/folders`);
+};
+
 export default {
   login,
   registerGet,
@@ -195,4 +202,5 @@ export default {
   deleteFile,
   deleteFileShare,
   deleteFolderShare,
+  deleteFolder,
 };

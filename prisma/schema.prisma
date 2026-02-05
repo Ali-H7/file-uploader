@@ -56,13 +56,13 @@ model FileShares {
 }
 
 model Folder {
-  id           Int            @id @default(autoincrement())
-  folderName   String         @map("folder_name") @db.VarChar(255)
-  createDate   DateTime       @default(now()) @map("create_date")
-  userId       Int            @map("user_id")
-  user         User           @relation(fields: [userId], references: [id])
-  urlId        String         @unique @default(uuid()) @map("url_id") @db.Uuid
-  folderShares FolderShares[]
+  id           Int           @id @default(autoincrement())
+  folderName   String        @map("folder_name") @db.VarChar(255)
+  createDate   DateTime      @default(now()) @map("create_date")
+  userId       Int           @map("user_id")
+  user         User          @relation(fields: [userId], references: [id])
+  urlId        String        @unique @default(uuid()) @map("url_id") @db.Uuid
+  folderShares FolderShares?
   files        File[]
 
   @@map("folder")
@@ -72,8 +72,8 @@ model FolderShares {
   id         Int      @id @default(autoincrement())
   userId     Int      @map("user_id")
   user       User     @relation(fields: [userId], references: [id])
-  folderId   Int      @map("folder_id")
-  folder     Folder   @relation(fields: [folderId], references: [id])
+  folderId   Int      @unique @map("folder_id")
+  folder     Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
   validUntil DateTime @map("valid_until")
   shareDate  DateTime @default(now()) @map("share_date")
 
