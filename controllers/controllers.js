@@ -114,8 +114,8 @@ const sharedFile = async (req, res) => {
   const shareId = `share/${req.params.cloudinaryId}`;
   const url = req.protocol + '://' + req.get('host') + req.originalUrl;
   let share = await fileSharesModel.findFileShare(shareId);
-  if (!share) return res.redirect('/404');
-  share = helpers.formatFileShare(share, url);
+  share = share && helpers.formatFileShare(share, url);
+  if (!share || !share.status) return res.redirect('/404');
   res.render('shared-file', { share });
 };
 
